@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "frontend"
+    },
+    {
+      "path": "backend"
+    },
+    {
+      "path": "database"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "frontend": true,
+      "backend": true,
+      "database": true
+    }
+  }
+}
