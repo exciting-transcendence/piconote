@@ -30,3 +30,9 @@ rules:
   semi:
     - error
     - never
+  eqeqeq:
+    - error
+    - always
+  comma-dangle:
+    - error
+    - only-multiline
