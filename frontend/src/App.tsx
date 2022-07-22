@@ -6,49 +6,69 @@ import { useState } from 'react'
 import { Note } from './Note'
 import { v4 as uuidv4 } from 'uuid'
 
-function App() {
-  const [notes, setNotes] = useState<Note[]>(
-    JSON.parse(localStorage.getItem('notes') || '[]'),
-  )
-  const [activeNote, setActiveNote] = useState<string | null>(null)
+const App = () => {
+  const useNotes = () => {
+    const [notes, setNotes] = useState<Note[]>(
+      JSON.parse(localStorage.getItem('notes') || '[]'),
+    )
+    const [activeNoteId, setActiveNoteId] = useState<string | null>(null)
 
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes))
-  }, [notes])
+    useEffect(() => {
+      localStorage.setItem('notes', JSON.stringify(notes))
+    }, [notes])
 
-  const onAddNote = () => {
-    const newNote = {
-      id: uuidv4(),
-      title: 'Untitled Note',
-      body: '',
-      lastModified: Date.now(),
-    }
-    console.log('Adding note')
-    setNotes([...notes, newNote])
-    setActiveNote(newNote.id)
-    console.log(notes)
-  }
-
-  const onDeleteNote = (id: string) => {
-    setNotes(notes.filter(note => note.id !== id))
-  }
-
-  const getActiveNote = () => {
-    return notes.find(note => note.id === activeNote)
-  }
-
-  const onUpdateNote = (updatedNote: Note) => {
-    const newNotes = notes.map(note => {
-      if (note.id === activeNote) {
-        return updatedNote
+    const onAddNote = () => {
+      const newNote = {
+        id: uuidv4(),
+        title: 'Untitled Note',
+        body: '',
+        lastModified: Date.now(),
       }
-      return note
-    })
+      setNotes([...notes, newNote])
+      setActiveNoteId(newNote.id)
+    }
 
-    setNotes(newNotes)
+    const onDeleteNote = (id: string) => {
+      setNotes(notes.filter(note => note.id !== id))
+    }
+
+    const getActiveNote = () => {
+      return notes.find(note => note.id === activeNoteId)
+    }
+
+    const onUpdateNote = (updatedNote: Note) => {
+      const newNotes = notes.map(note => {
+        if (note.id === activeNoteId) {
+          return updatedNote
+        }
+        return note
+      })
+
+      setNotes(newNotes)
+    }
+
+    const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
+
+    return {
+      sortedNotes,
+      onAddNote,
+      onDeleteNote,
+      onUpdateNote,
+      getActiveNote,
+      activeNoteId,
+      setActiveNoteId,
+    }
   }
 
-  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
+  const {
+    sortedNotes,
+    onAddNote,
+    activeNoteId,
+    setActiveNoteId,
+    onDeleteNote,
+    onUpdateNote,
+    getActiveNote,
+  } = useNotes()
 
   return (
     <div className="App">
@@ -58,9 +78,9 @@ function App() {
           <NotePreview
             note={note}
             key={note.id}
+            activeNote={activeNoteId}
             onDeleteNote={onDeleteNote}
-            activeNote={activeNote}
-            setActiveNote={setActiveNote}
+            setActiveNote={setActiveNoteId}
           />
         ))}
       />

@@ -28,7 +28,7 @@ export const NotePreview = ({
         <button onClick={() => onDeleteNote(note.id)}>Delete</button>
       </div>
 
-      <p>{note.body ? shorten(note.body) : 'empty note'}</p>
+      <p>{shorten(note.body)}</p>
       <small className="note-meta">
         Last Modified {new Date(note.lastModified).toISOString()}
       </small>
