@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import Main from './Main'
-import Sidebar from './Sidebar'
+import Sidebar, { NotePreview } from './Sidebar'
 import { useState } from 'react'
 import { Note } from './Note'
 import { v4 as uuidv4 } from 'uuid'
@@ -48,14 +48,21 @@ function App() {
     setNotes(newNotes)
   }
 
+  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
+
   return (
     <div className="App">
       <Sidebar
-        notes={notes}
         onAddNote={onAddNote}
-        onDeleteNote={onDeleteNote}
-        activeNote={activeNote}
-        setActiveNote={setActiveNote}
+        notes={sortedNotes.map(note => (
+          <NotePreview
+            note={note}
+            key={note.id}
+            onDeleteNote={onDeleteNote}
+            activeNote={activeNote}
+            setActiveNote={setActiveNote}
+          />
+        ))}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>

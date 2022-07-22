@@ -8,7 +8,7 @@ const shorten = (str: string, maxLength = 100) => {
   return str
 }
 
-const NotePreview = ({
+export const NotePreview = ({
   note,
   onDeleteNote,
   setActiveNote,
@@ -39,35 +39,17 @@ const NotePreview = ({
 const Sidebar = ({
   notes,
   onAddNote,
-  onDeleteNote,
-  activeNote,
-  setActiveNote,
 }: {
-  notes: Note[]
+  notes: JSX.Element[]
   onAddNote: () => void
-  onDeleteNote: (id: string) => void
-  activeNote: string | null
-  setActiveNote: any
 }) => {
-  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
-
   return (
     <div className="app-sidebar">
       <div className="app-sidebar-header">
         <h1>Notes</h1>
         <button onClick={onAddNote}>Add</button>
       </div>
-      <div className="app-sidebar-notes">
-        {sortedNotes.map(note => (
-          <NotePreview
-            note={note}
-            key={note.id}
-            onDeleteNote={onDeleteNote}
-            activeNote={activeNote}
-            setActiveNote={setActiveNote}
-          />
-        ))}
-      </div>
+      <div className="app-sidebar-notes">{notes}</div>
     </div>
   )
 }
