@@ -49,6 +49,8 @@ const Sidebar = ({
   activeNote: string | null
   setActiveNote: any
 }) => {
+  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
+
   return (
     <div className="app-sidebar">
       <div className="app-sidebar-header">
@@ -56,7 +58,7 @@ const Sidebar = ({
         <button onClick={onAddNote}>Add</button>
       </div>
       <div className="app-sidebar-notes">
-        {notes.map(note => (
+        {sortedNotes.map(note => (
           <NotePreview
             note={note}
             key={note.id}
