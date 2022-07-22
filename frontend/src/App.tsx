@@ -4,7 +4,6 @@ import Main from './Main'
 import Sidebar, { NotePreview } from './Sidebar'
 import { useState } from 'react'
 import { Note } from './Note'
-import { v4 as uuidv4 } from 'uuid'
 
 const App = () => {
   const useNotes = () => {
@@ -18,12 +17,7 @@ const App = () => {
     }, [notes])
 
     const onAddNote = () => {
-      const newNote = {
-        id: uuidv4(),
-        title: 'Untitled Note',
-        body: '',
-        lastModified: Date.now(),
-      }
+      const newNote = new Note()
       setNotes([...notes, newNote])
       setActiveNoteId(newNote.id)
     }
