@@ -43,7 +43,10 @@
     ]
   },
   "devDependencies": {
-    "@svgr/webpack": "^6.3.0"
+    "@svgr/webpack": "^6.3.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "tar": "^6.1.11"
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
